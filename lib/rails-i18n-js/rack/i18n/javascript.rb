@@ -1,6 +1,9 @@
 module Rack
   module I18n
     class Javascript
+      class_attribute :namespace
+      self.namespace = ''
+
       def initialize(app)
         @app = app
       end
@@ -13,9 +16,8 @@ module Rack
         end
       end
 
-      def serve_translations(locale)
-        # FIXME patch I18n::Backend::Base, adding #translations_for
-        if translations = ::I18n.backend.send(:translations)[locale.to_sym]
+      def serve_translations(locale, namespace = self.class.namespace)
+        if translations = ::I18n.t(namespace, :locale => locale)
           [ 200, {"Content-Type" => "text/javascript"}, javascript_for(locale, translations) ]
         else
           [ 404, {"Content-Type" => "text/javascript"}, "Not Found" ]
