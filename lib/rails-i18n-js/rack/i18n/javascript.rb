@@ -2,7 +2,7 @@ module Rack
   module I18n
     class Javascript
       class_attribute :namespace
-      self.namespace = ''
+      self.namespace = '.'
 
       def initialize(app)
         @app = app
