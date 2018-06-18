@@ -18,9 +18,9 @@ module Rack
 
       def serve_translations(locale, namespace = self.class.namespace)
         if translations = ::I18n.t(namespace, :locale => locale)
-          [ 200, {"Content-Type" => "text/javascript"}, javascript_for(locale, translations) ]
+          [ 200, {"Content-Type" => "text/javascript"}, [javascript_for(locale, translations)] ]
         else
-          [ 404, {"Content-Type" => "text/javascript"}, "Not Found" ]
+          [ 404, {"Content-Type" => "text/javascript"}, ["Not Found"] ]
         end
       end
 
